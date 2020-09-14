@@ -1,6 +1,6 @@
 {
   "name": "grafana-discrete-panel",
-  "version": "{{VEG_VERSION}}",
+  "version": "0.0.0", 
   "description": "Discrete Events in Grafana",
   "scripts": {
     "build": "grafana-toolkit plugin:build",

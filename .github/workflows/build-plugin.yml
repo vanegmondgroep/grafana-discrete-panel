@@ -23,7 +23,7 @@ jobs:
           echo "::set-env name=VEG_VERSION::${VEG_VERSION}"
           echo "::set-env name=VEG_REPOSITORY::${VEG_REPOSITORY}"
 
-          sed -i s/{{VEG_VERSION}}/${VEG_VERSION}/g package.json
+          sed -i s/0.0.0/${VEG_VERSION}/g package.json
 
           yarn install
           yarn build
