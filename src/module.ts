@@ -180,7 +180,7 @@ class DiscretePanelCtrl extends CanvasPanelCtrl {
   };
 
   /** @ngInject */
-  constructor($scope, $injector, public annotationsSrv, private templateSrv) {
+  constructor($scope, $injector, public annotationsSrv, public templateSrv) {
     super($scope, $injector);
 
     // defaults configs
