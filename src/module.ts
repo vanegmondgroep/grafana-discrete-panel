@@ -20,7 +20,6 @@ import $ from 'jquery';
 import kbn from 'grafana/app/core/utils/kbn';
 
 import appEvents from 'grafana/app/core/app_events';
-import templateSrv from '@grafana/runtime';
 
 /* eslint-disable id-blacklist, no-restricted-imports, @typescript-eslint/ban-types */
 import moment from 'moment';
@@ -181,7 +180,7 @@ class DiscretePanelCtrl extends CanvasPanelCtrl {
   };
 
   /** @ngInject */
-  constructor($scope, $injector, public annotationsSrv) {
+  constructor($scope, $injector, public annotationsSrv, private templateSrv) {
     super($scope, $injector);
 
     // defaults configs
@@ -349,11 +348,10 @@ class DiscretePanelCtrl extends CanvasPanelCtrl {
   //vegEdit: map variables
   variableMap(val, variableName) {
     if (variableName) {
-      const variables = _.find(templateSrv.getTemplateSrv().getVariables(), { name: variableName });
-      console.log(variables);
-      if (variables && typeof variables !== undefined && variables instanceof Array) {
-        for (let i = 0; i < variables.length; i++) {
-          const option = variables[i];
+      const variables = _.find(this.templateSrv.getVariables(), { name: variableName });
+      if (variables && typeof variables.options !== undefined && variables.options instanceof Array) {
+        for (let i = 0; i < variables.options.length; i++) {
+          const option = variables.options[i];
           const optionValue = option.value.split(';', 2);
           if (optionValue && val === optionValue[0]) {
             return optionValue[1];
