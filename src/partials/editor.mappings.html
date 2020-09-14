@@ -47,7 +47,15 @@
   </div>
 </div>
 
-
+<div class="editor-row">
+  <h5 class="page-heading">Variable Value Mapping</h5>
+  <div class="gf-form-group">
+    <div class="gf-form">
+      <label class="gf-form-label width-10">Variable Name</label>
+      <input type="text" class="gf-form-input max-width-20" placeholder="statuses" empty-to-null bs-tooltip="'Enter the variable name which contains the value to text mapping. The variable needs to have one or more values with the following structure: value:text (example: 10;Active, 20;Standby)'" data-placement="right" ng-model="ctrl.panel.variableValueMap" ng-change="ctrl.onConfigChanged(true);" ng-model-onblur>
+    </div>
+  </div>
+</div>
 
 <div class="editor-row">
   <h5 class="page-heading">Numeric Conversion</h5>

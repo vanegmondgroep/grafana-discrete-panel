@@ -20,6 +20,7 @@ import $ from 'jquery';
 import kbn from 'grafana/app/core/utils/kbn';
 
 import appEvents from 'grafana/app/core/app_events';
+import templateSrv from '@grafana/runtime';
 
 /* eslint-disable id-blacklist, no-restricted-imports, @typescript-eslint/ban-types */
 import moment from 'moment';
@@ -220,10 +221,10 @@ class DiscretePanelCtrl extends CanvasPanelCtrl {
   onInitEditMode() {
     this.unitFormats = kbn.getUnitFormats();
 
-    this.addEditorTab('Options', 'public/plugins/natel-discrete-panel/partials/editor.options.html', 1);
-    this.addEditorTab('Legend', 'public/plugins/natel-discrete-panel/partials/editor.legend.html', 3);
-    this.addEditorTab('Colors', 'public/plugins/natel-discrete-panel/partials/editor.colors.html', 4);
-    this.addEditorTab('Mappings', 'public/plugins/natel-discrete-panel/partials/editor.mappings.html', 5);
+    this.addEditorTab('Options', 'public/plugins/veg-grafana-discrete-panel/partials/editor.options.html', 1);
+    this.addEditorTab('Legend', 'public/plugins/veg-grafana-discrete-panel/partials/editor.legend.html', 3);
+    this.addEditorTab('Colors', 'public/plugins/veg-grafana-discrete-panel/partials/editor.colors.html', 4);
+    this.addEditorTab('Mappings', 'public/plugins/veg-grafana-discrete-panel/partials/editor.mappings.html', 5);
     this.editorTabIndex = 1;
     this.refresh();
   }
@@ -308,7 +309,11 @@ class DiscretePanelCtrl extends CanvasPanelCtrl {
         return map.text;
       }
     }
-
+    //vegEdit: map variables
+    const variableMapValue = this.variableMap(val, this.panel.variableValueMap);
+    if (variableMapValue) {
+      return variableMapValue;
+    }
     if (isNull) {
       return 'null';
     }
@@ -319,6 +324,12 @@ class DiscretePanelCtrl extends CanvasPanelCtrl {
     if (_.has(this.colorMap, val)) {
       return this.colorMap[val];
     }
+    //vegEdit: map variables
+    const variableMapValue = this.variableMap(val, this.panel.variableColorMap);
+    if (variableMapValue) {
+      return variableMapValue;
+    }
+
     if (this._colorsPaleteCash[val] === undefined) {
       const c = grafanaColors[this._colorsPaleteCash.length % grafanaColors.length];
       this._colorsPaleteCash[val] = c;
@@ -334,6 +345,23 @@ class DiscretePanelCtrl extends CanvasPanelCtrl {
       color += letters[Math.floor(Math.random() * letters.length)];
     }
     return color;
+  }
+  //vegEdit: map variables
+  variableMap(val, variableName) {
+    if (variableName) {
+      const variables = _.find(templateSrv.getTemplateSrv().getVariables(), { name: variableName });
+      console.log(variables);
+      if (variables && typeof variables !== undefined && variables instanceof Array) {
+        for (let i = 0; i < variables.length; i++) {
+          const option = variables[i];
+          const optionValue = option.value.split(';', 2);
+          if (optionValue && val === optionValue[0]) {
+            return optionValue[1];
+          }
+        }
+      }
+    }
+    return false;
   }
 
   // Override the
