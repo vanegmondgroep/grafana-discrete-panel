@@ -1,4 +1,6 @@
-## Discrete Panel
+# Grafana Discrete Panel Plugin
+
+![build-plugin](https://github.com/vanegmondgroep/grafana-discrete-panel/workflows/build-plugin/badge.svg)
 
 Grafana panel plugin for showing discrete events in a horizontal graph.
 
