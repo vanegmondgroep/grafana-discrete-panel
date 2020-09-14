@@ -1,0 +1,42 @@
+---
+name: build-plugin
+
+on:
+  push:
+    branches:
+      - "*"
+  release:
+    types:
+      - created
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Build plugin.
+        run: |
+          VEG_VERSION=`printf "%s\n" "${GITHUB_REF##*/}"`
+          VEG_REPOSITORY=`printf "%s\n" "${GITHUB_REPOSITORY##*/}"`
+          echo "::set-env name=VEG_VERSION::${VEG_VERSION}"
+          echo "::set-env name=VEG_REPOSITORY::${VEG_REPOSITORY}"
+
+          sed -i s/{{VEG_VERSION}}/${VEG_VERSION}/g package.json
+
+          yarn install
+          yarn build
+
+          cd ../ && zip -r9 ${VEG_REPOSITORY}.zip ${VEG_REPOSITORY} -x *.git* */node_modules/\*
+
+      - name: Upload zip to release.
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ../${{ env.VEG_REPOSITORY }}.zip
+          asset_name: ${{ env.VEG_REPOSITORY }}.zip
+          asset_content_type: application/zip
+        if: github.event.release
