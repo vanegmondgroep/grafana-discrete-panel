@@ -1,38 +1,46 @@
 {
   "type": "panel",
   "name": "Discrete",
-  "id": "natel-discrete-panel",
-
+  "id": "veg-grafana-discrete-panel",
   "info": {
-    "description": "Discrete Events grafana",
+    "description": "Grafana panel plugin for showing discrete events in a horizontal graph.",
     "author": {
-      "name": "Natel Energy"
+      "name": "Van Egmond Groep"
     },
-    "keywords": [ "discrete", "events", "strings" ],
+    "keywords": [
+      "discrete",
+      "events",
+      "strings"
+    ],
     "logos": {
       "small": "img/discrete_logo.svg",
       "large": "img/discrete_logo.svg"
     },
     "links": [
-      {"name": "Project site", "url": "https://github.com/NatelEnergy/grafana-discrete-panel"},
-      {"name": "MIT License",  "url": "https://github.com/NatelEnergy/grafana-discrete-panel/blob/master/LICENSE"},
-      {"name": "Natel Energy", "url": "http://www.natelenergy.com/"}
+      {
+        "name": "Project site",
+        "url": "https://github.com/vanegmondgroep/grafana-discrete-panel"
+      },
+      {
+        "name": "MIT License",
+        "url": "https://github.com/vanegmondgroep/grafana-discrete-panel/blob/master/LICENSE"
+      },
+      {
+        "name": "Van Egmond Groep",
+        "url": "https://www.vanegmond.nl/"
+      }
     ],
     "screenshots": [
-      { "name": "Single State",     "path": "img/screenshot-single-1.png"  },
-      { "name": "Tooltips",         "path": "img/screenshot-single-2.png"  },
-      { "name": "Summary Tooltips", "path": "img/screenshot-single-3.png"  },
-      { "name": "Show all values",  "path": "img/screenshot-single-4.png"  },
-      { "name": "Multiple Results", "path": "img/screenshot-multiple.png"  },
-      { "name": "Options",          "path": "img/screenshot-options-1.png" },
-      { "name": "Legend",           "path": "img/screenshot-options-2.png" }
+      {
+        "name": "Multiple Results",
+        "path": "img/screenshot-multiple.jpg"
+      }
     ],
     "version": "%VERSION%",
     "updated": "%TODAY%"
   },
-
   "dependencies": {
-    "grafanaVersion": "6.4.x",
-    "plugins": [ ]
+    "grafanaVersion": "7.1.x",
+    "plugins": []
   }
 }
